@@ -7,15 +7,15 @@ import javax.validation.constraints.Size
 
 @Entity
 class Contact(
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @field:Id
+    @field:GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long,
 
-    @NotNull
-    @Size(min = 5, max = 50)
+    @field:NotNull
+    @field:Size(min = 5, max = 50, message = "Campo nome não pode ser vazio")
     var name: String,
 
-    @NotNull
-    @Email
+    @field:NotNull
+    @field:Email(message ="Campo email não pode ser vazio")
     var email: String
 )

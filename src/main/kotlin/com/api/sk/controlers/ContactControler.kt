@@ -6,8 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.*
 
 @RestController
-@RequestMapping("contacts")
-class ContactControler {
+@RequestMapping("/contacts")
+class ContactController {
 
      @Autowired
      lateinit var repository: ContactRepository

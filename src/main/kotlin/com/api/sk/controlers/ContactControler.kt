@@ -13,13 +13,13 @@ class ContactController {
      lateinit var repository: ContactRepository
 
      @GetMapping
-     fun lista() {
-         repository.findAll()
+     fun lista(): List<Contact> {
+         return repository.findAll()
      }
 
     @PostMapping
-    fun criaContato(@RequestBody contact: Contact) {
-        repository.save(contact)
+    fun criaContato(@RequestBody contact: Contact): Contact {
+       return repository.save(contact)
     }
 
 }

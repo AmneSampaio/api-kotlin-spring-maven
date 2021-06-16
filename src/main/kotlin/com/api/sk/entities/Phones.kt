@@ -6,17 +6,18 @@ import javax.validation.constraints.Email
 import javax.validation.constraints.Size
 
 @Entity
-class Contact(
+class Phones(
     @field:Id
     @field:GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long,
 
     @field:NotNull
-    @field:Size(min = 5, max = 50, message = "Field name is not valid")
-    var name: String,
+    @field:Size(min = 3, max = 3, message = "Field code is not valid")
+    var code: String,
 
     @field:NotNull
-    @field:Email(message ="Field email is not valid")
-    var email: String
+    @field:Size(min = 8, max = 8, message = "Field number is not valid")
+    var number: String
 
-)
+) {
+}

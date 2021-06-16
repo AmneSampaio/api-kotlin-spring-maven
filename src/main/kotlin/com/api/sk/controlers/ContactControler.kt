@@ -19,6 +19,11 @@ class ContactController {
          return repository.findAll()
      }
 
+    @GetMapping("/{id}")
+    fun listaPorId(@PathVariable("id") id: Long): Contact {
+        return repository.findById(id).orElseThrow {EntityNotFoundException()}
+    }
+
     @PostMapping
     fun criaContato(@RequestBody contact: Contact): Contact {
        return repository.save(contact)

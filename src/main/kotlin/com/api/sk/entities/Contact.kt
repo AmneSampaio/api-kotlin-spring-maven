@@ -19,4 +19,3 @@ class Contact(
     @Email
     var email: String
 )
-}

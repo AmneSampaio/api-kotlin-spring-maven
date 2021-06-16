@@ -5,6 +5,7 @@ import com.api.sk.repositories.ContactRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.*
 import javax.persistence.EntityNotFoundException
+import javax.validation.constraints.Null
 
 @RestController
 @RequestMapping("/contacts")
@@ -24,13 +25,19 @@ class ContactController {
     }
 
     @PutMapping("/{id}")
-    fun atualiza(@PathVariable id: Long, @RequestBody newContact: Contact): Contact {
+    fun atualiza(@PathVariable("id") id: Long, @RequestBody newContact: Contact): Contact {
         val contact = repository.findById(id).orElseThrow {EntityNotFoundException()}
         contact.apply {
             this.name = newContact.name
             this.email = newContact.email
         }
     return repository.save(contact)
+    }
+
+    @DeleteMapping("/{id}")
+    fun deleta(@PathVariable("id") id: Long) {
+        val contact = repository.findById(id).orElseThrow {EntityNotFoundException()}
+        repository.delete(contact)
     }
 
 

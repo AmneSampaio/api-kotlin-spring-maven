@@ -17,6 +17,7 @@ class Contact(
 
     @field:NotNull
     @field:Email(message ="Field email is not valid")
+    @field:Column(unique = true)
     var email: String,
 
     @OneToMany(cascade = arrayOf(CascadeType.ALL))

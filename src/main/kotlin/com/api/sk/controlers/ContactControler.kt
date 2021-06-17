@@ -3,10 +3,11 @@ package com.api.sk.controlers
 import com.api.sk.entities.Contact
 import com.api.sk.repositories.ContactRepository
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.http.HttpStatus
+import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import javax.persistence.EntityNotFoundException
 import javax.validation.Valid
-import javax.validation.constraints.Null
 
 @RestController
 @RequestMapping("/contacts")
@@ -32,12 +33,12 @@ class ContactController {
 
     @PutMapping("/{id}")
     fun atualiza(@Valid @PathVariable("id") id: Long, @RequestBody newContact: Contact): Contact {
-        val contact = repository.findById(id).orElseThrow {EntityNotFoundException()}
-        contact.apply {
+        val contactNoBanco = repository.findById(id).orElseThrow {EntityNotFoundException()}
+        contactNoBanco.apply {
             this.name = newContact.name
             this.email = newContact.email
         }
-    return repository.save(contact)
+    return repository.save(contactNoBanco)
     }
 
     @DeleteMapping("/{id}")

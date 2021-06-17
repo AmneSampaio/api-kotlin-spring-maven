@@ -19,5 +19,4 @@ class Phones(
     @field:Size(min = 8, max = 8, message = "Field number is not valid")
     var number: String
 
-) {
-}
+)

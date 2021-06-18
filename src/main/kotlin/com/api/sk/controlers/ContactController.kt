@@ -2,7 +2,10 @@ package com.api.sk.controlers
 
 import com.api.sk.entities.Contact
 import com.api.sk.service.ContactService
+import org.springframework.http.HttpStatus
+import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
+import org.springframework.web.util.UriComponentsBuilder
 import javax.validation.Valid
 
 @RestController
@@ -20,8 +23,11 @@ class ContactController(private val contactService: ContactService) {
     }
 
     @PostMapping
-    fun criaContato(@Valid @RequestBody contact: Contact): Contact {
-       return contactService.criaContato(contact)
+    fun criaContato(@Valid @RequestBody contact: Contact,
+                    uriBuilder: UriComponentsBuilder): ResponseEntity<Contact> {
+       val contactSalvo = contactService.criaContato(contact)
+       val uri = uriBuilder.path("/contacts/${contactSalvo.id}").build().toUri()
+       return ResponseEntity.created(uri).body(contactSalvo)
     }
 
     @PutMapping("/{id}")

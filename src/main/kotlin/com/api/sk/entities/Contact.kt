@@ -6,7 +6,7 @@ import javax.validation.constraints.Email
 import javax.validation.constraints.Size
 
 @Entity
-class Contact(
+data class Contact(
     @field:Id
     @field:GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long,

@@ -2,7 +2,6 @@ package com.api.sk.service
 
 import com.api.sk.entities.Contact
 import com.api.sk.repositories.ContactRepository
-import org.springframework.data.jpa.domain.AbstractPersistable_.id
 import org.springframework.stereotype.Service
 import javax.persistence.EntityNotFoundException
 
@@ -12,25 +11,25 @@ class ContactService(private val contactRepository: ContactRepository) {
         return contactRepository.findAll()
     }
 
-    fun listaPorId(): Contact {
+    fun listaPorId(id: Long): Contact {
         return contactRepository.findById(id).orElseThrow { EntityNotFoundException() }
     }
 
-    fun criaContato(): Contact {
+    fun criaContato(contact: Contact): Contact {
         return contactRepository.save(contact)
     }
 
-    fun atualiza(): Contact {
+    fun atualiza(id: Long, newContact: Contact): Contact {
         val contactNoBanco = contactRepository.findById(id).orElseThrow {EntityNotFoundException()}
         contactNoBanco.apply {
             this.name = newContact.name
             this.email = newContact.email
         }
-        return contactRepository.save(contactNoBanco)
+        return contactRepository.save(newContact)
     }
 
-    fun deleta() {
+    fun deleta(id: Long) {
         val contact = contactRepository.findById(id).orElseThrow {EntityNotFoundException()}
-        contactRepository.delete(contact)
+        return contactRepository.delete(contact)
     }
 }

@@ -1,6 +1,6 @@
 package com.api.sk.entities
 
-import com.sun.istack.NotNull
+import java.time.LocalDateTime
 import javax.persistence.*
 import javax.validation.constraints.Email
 import javax.validation.constraints.NotEmpty
@@ -20,6 +20,8 @@ data class Contact(
     @field:Email(message ="Field email is not valid")
     @field:Column(unique = true)
     var email: String,
+
+    var data: LocalDateTime = LocalDateTime.now(),
 
     @OneToMany(cascade = arrayOf(CascadeType.ALL))
     var phones: List<Phones>

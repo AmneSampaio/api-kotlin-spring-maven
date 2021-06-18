@@ -1,13 +1,8 @@
 package com.api.sk.controlers
 
 import com.api.sk.entities.Contact
-import com.api.sk.repositories.ContactRepository
 import com.api.sk.service.ContactService
-import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.http.HttpStatus
-import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
-import javax.persistence.EntityNotFoundException
 import javax.validation.Valid
 
 @RestController
@@ -20,23 +15,23 @@ class ContactController(private val contactService: ContactService) {
      }
 
     @GetMapping("/{id}")
-    fun listaPorId(@Valid @PathVariable("id") id: Long): Contact {
-        return contactService.listaPorId()
+    fun listaPorId(@Valid @PathVariable id: Long): Contact {
+        return contactService.listaPorId(id)
     }
 
     @PostMapping
     fun criaContato(@Valid @RequestBody contact: Contact): Contact {
-       return contactService.criaContato()
+       return contactService.criaContato(contact)
     }
 
     @PutMapping("/{id}")
     fun atualiza(@Valid @PathVariable("id") id: Long, @RequestBody newContact: Contact): Contact {
-        return contactService.atualiza()
+        return contactService.atualiza(id,newContact)
     }
 
     @DeleteMapping("/{id}")
     fun deleta(@Valid @PathVariable("id") id: Long) {
-        return contactService.deleta()
+        return contactService.deleta(id)
     }
 
 

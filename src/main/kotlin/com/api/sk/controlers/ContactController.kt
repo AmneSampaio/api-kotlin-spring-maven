@@ -2,6 +2,7 @@ package com.api.sk.controlers
 
 import com.api.sk.entities.Contact
 import com.api.sk.repositories.ContactRepository
+import com.api.sk.service.ContactService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -11,40 +12,31 @@ import javax.validation.Valid
 
 @RestController
 @RequestMapping("/contacts")
-class ContactController {
-
-     @Autowired
-     lateinit var repository: ContactRepository
+class ContactController(private val contactService: ContactService) {
 
      @GetMapping
-     fun lista(): List<Contact> {
-         return repository.findAll()
+     fun listaTodos(): List<Contact> {
+         return contactService.listarTodos()
      }
 
     @GetMapping("/{id}")
     fun listaPorId(@Valid @PathVariable("id") id: Long): Contact {
-        return repository.findById(id).orElseThrow {EntityNotFoundException()}
+        return contactService.listaPorId()
     }
 
     @PostMapping
     fun criaContato(@Valid @RequestBody contact: Contact): Contact {
-       return repository.save(contact)
+       return contactService.criaContato()
     }
 
     @PutMapping("/{id}")
     fun atualiza(@Valid @PathVariable("id") id: Long, @RequestBody newContact: Contact): Contact {
-        val contactNoBanco = repository.findById(id).orElseThrow {EntityNotFoundException()}
-        contactNoBanco.apply {
-            this.name = newContact.name
-            this.email = newContact.email
-        }
-    return repository.save(contactNoBanco)
+        return contactService.atualiza()
     }
 
     @DeleteMapping("/{id}")
     fun deleta(@Valid @PathVariable("id") id: Long) {
-        val contact = repository.findById(id).orElseThrow {EntityNotFoundException()}
-        repository.delete(contact)
+        return contactService.deleta()
     }
 
 

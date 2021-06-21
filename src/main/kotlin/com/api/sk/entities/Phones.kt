@@ -17,7 +17,7 @@ data class Phones(
     var code: String,
 
     @field:NotEmpty
-    @field:Size(min = 8, max = 8, message = "Field number is not valid")
+    @field:Size(min = 9, max = 9, message = "Field number is not valid")
     var number: String
 
 )

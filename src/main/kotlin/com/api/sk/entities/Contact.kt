@@ -24,5 +24,6 @@ data class Contact(
     var data: LocalDateTime = LocalDateTime.now(),
 
     @OneToMany(cascade = arrayOf(CascadeType.ALL))
+    //@OrderColumn
     var phones: List<Phones>
 )

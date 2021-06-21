@@ -6,7 +6,6 @@ import javax.validation.constraints.Email
 import javax.validation.constraints.NotEmpty
 import javax.validation.constraints.Size
 
-@Entity
 data class ContactForm(
     @field:Id
     @field:GeneratedValue(strategy = GenerationType.IDENTITY)

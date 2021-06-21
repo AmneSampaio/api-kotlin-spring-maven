@@ -7,10 +7,6 @@ import javax.validation.constraints.NotEmpty
 import javax.validation.constraints.Size
 
 data class ContactForm(
-    @field:Id
-    @field:GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Long,
-
     @field:NotEmpty
     @field:Size(min = 5, max = 50, message = "Field name is not valid")
     var name: String,

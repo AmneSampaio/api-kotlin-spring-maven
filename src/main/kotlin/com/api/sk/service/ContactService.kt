@@ -20,18 +20,27 @@ class ContactService(private val contactRepository: ContactRepository) {
         return contactRepository.save(contact)
     }
 
+    fun adicionaPhones(id: Long, newContact: ContactForm): Contact {
+        val contactNoBanco = contactRepository.findById(id).orElseThrow { EntityNotFoundException() }
+        //val contactSalvo = contactNoBanco.apply {newContact}
+        //val contactAtualizado = contactNoBanco.apply { contactSalvo }
+        return contactRepository.save(contactNoBanco)
+    }
+
     fun atualiza(id: Long, newContact: ContactForm): Contact {
-        val contactNoBanco = contactRepository.findById(id).orElseThrow {EntityNotFoundException()}
+        val contactNoBanco = contactRepository.findById(id).orElseThrow { EntityNotFoundException() }
         val contactAtualizado = contactNoBanco.apply {
             this.name = newContact.name
             this.email = newContact.email
-            this.phones = newContact.phones
+            this.phones = newContact.phones.toMutableList()
         }
         return contactRepository.save(contactAtualizado)
     }
 
+
     fun deleta(id: Long) {
-        val contact = contactRepository.findById(id).orElseThrow {EntityNotFoundException()}
+        val contact = contactRepository.findById(id).orElseThrow { EntityNotFoundException() }
         return contactRepository.delete(contact)
     }
 }
+

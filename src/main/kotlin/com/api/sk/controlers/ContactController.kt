@@ -30,9 +30,17 @@ class ContactController(private val contactService: ContactService) {
        return ResponseEntity.created(uri).body(contactSalvo)
     }
 
+    @PostMapping("/addPhones/{id}")
+    fun adicionaPhones(@Valid @PathVariable id: Long, @RequestBody newContact: ContactForm): ResponseEntity<Contact> {
+        val contactSalvo = contactService.adicionaPhones(id, newContact)
+        return ResponseEntity.ok(contactSalvo)
+    }
+
+
+
     @PutMapping("/{id}")
-    fun atualiza(@Valid @PathVariable("id") id: Long, @RequestBody newContact: ContactForm): ResponseEntity<Contact> {
-        val contactAtualizado = contactService.atualiza(id,newContact)
+    fun atualiza(@Valid @PathVariable id: Long, @RequestBody newContact: ContactForm): ResponseEntity<Contact> {
+        val contactAtualizado = contactService.atualiza(id, newContact)
         return ResponseEntity.ok(contactAtualizado)
     }
 

@@ -12,10 +12,10 @@ import javax.validation.Valid
 @RequestMapping("/contacts")
 class ContactController(private val contactService: ContactService) {
 
-     @GetMapping
-     fun listaTodos(): List<Contact> {
-         return contactService.listarTodos()
-     }
+    @GetMapping
+    fun listaTodos(): List<Contact> {
+     return contactService.listarTodos()
+    }
 
     @GetMapping("/{id}")
     fun listaPorId(@Valid @PathVariable id: Long): Contact {

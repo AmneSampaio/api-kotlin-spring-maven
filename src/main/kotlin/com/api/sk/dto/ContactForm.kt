@@ -1,6 +1,6 @@
 package com.api.sk.dto
 
-import com.api.sk.entities.Phones
+import com.api.sk.entities.Phone
 import javax.persistence.*
 import javax.validation.constraints.Email
 import javax.validation.constraints.NotEmpty
@@ -20,6 +20,6 @@ data class ContactForm(
     @field:Column(unique = true)
     var email: String,
 
-    @OneToMany(cascade = arrayOf(CascadeType.ALL))
-    var phones: List<Phones>
+    @OneToMany(cascade = [CascadeType.ALL])
+    var phone: List<Phone>
 )

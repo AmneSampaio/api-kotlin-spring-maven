@@ -25,7 +25,7 @@ class ContactService(private val contactRepository: ContactRepository) {
         val contactAtualizado = contactNoBanco.apply {
             this.name = newContact.name
             this.email = newContact.email
-            this.phones = newContact.phones
+            this.phone = newContact.phone
         }
         return contactRepository.save(contactAtualizado)
     }

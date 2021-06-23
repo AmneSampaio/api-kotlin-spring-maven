@@ -7,7 +7,7 @@ import javax.validation.constraints.NotEmpty
 import javax.validation.constraints.Size
 
 @Entity
-data class Phones(
+data class Phone(
     @field:Id
     @field:GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long,

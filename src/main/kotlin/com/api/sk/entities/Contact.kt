@@ -24,5 +24,5 @@ data class Contact(
     var data: LocalDateTime = LocalDateTime.now(),
 
     @OneToMany(cascade = arrayOf(CascadeType.ALL))
-    var phones: List<Phones>
+    var phone: List<Phone>
 )

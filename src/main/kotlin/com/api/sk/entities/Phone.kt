@@ -18,6 +18,10 @@ data class Phone(
 
     @field:NotEmpty
     @field:Size(min = 8, max = 8, message = "Field number is not valid")
-    var number: String
+    var number: String,
+
+    @ManyToOne
+    @JoinColumn(name = "contact_id")
+    val contact: Contact? = null
 
 )

@@ -22,6 +22,6 @@ data class Phone(
 
     @ManyToOne
     @JoinColumn(name = "contact_id")
-    val contact: Contact? = null
+    val contact: Contact? = null // TODO  Essa sintaxe é utilizada para que esse campo contact, não seja esperado no corpo da request. No entanto, ele ainda está aparecendo quando peço para mostrar o objeto criado.
 
 )

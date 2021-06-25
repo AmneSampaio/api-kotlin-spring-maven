@@ -16,7 +16,7 @@ data class ContactForm(
     var name: String,
 
     @field:NotEmpty
-    @field:Email(message ="Field email is not valid")
+    @field:Email(message = "Field email is not valid")
     @field:Column(unique = true)
     var email: String,
 

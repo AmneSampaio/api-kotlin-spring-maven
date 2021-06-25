@@ -14,25 +14,27 @@ class ContactController(private val contactService: ContactService) {
 
     @GetMapping
     fun listaTodos(): List<Contact> {
-     return contactService.listarTodos()
+        return contactService.listarTodos()
     }
 
     @GetMapping("/{id}")
-    fun listaPorId(@Valid @PathVariable id: Long): Contact {
-        return contactService.listaPorId(id)
+    fun listaPorId(@Valid @PathVariable id: Long): ResponseEntity<Contact> {
+        return ResponseEntity.ok().body(contactService.listaPorId(id))
     }
 
     @PostMapping
-    fun criaContato(@Valid @RequestBody contact: Contact,
-                    uriBuilder: UriComponentsBuilder): ResponseEntity<Contact> {
-       val contactSalvo = contactService.criaContato(contact)
-       val uri = uriBuilder.path("/contacts/${contactSalvo.id}").build().toUri()
-       return ResponseEntity.created(uri).body(contactSalvo)
+    fun criaContato(
+        @Valid @RequestBody contactForm: ContactForm,
+        uriBuilder: UriComponentsBuilder
+    ): ResponseEntity<Contact> {
+        val contactSalvo = contactService.criaContato(contactForm)
+        val uri = uriBuilder.path("/contacts/${contactSalvo.id}").build().toUri()
+        return ResponseEntity.created(uri).body(contactSalvo)
     }
 
     @PutMapping("/{id}")
-    fun atualiza(@Valid @PathVariable("id") id: Long, @RequestBody newContact: ContactForm): ResponseEntity<Contact> {
-        val contactAtualizado = contactService.atualiza(id,newContact)
+    fun atualiza(@Valid @PathVariable("id") id: Long, @RequestBody contactForm: ContactForm): ResponseEntity<Contact> {
+        val contactAtualizado = contactService.atualiza(id, contactForm)
         return ResponseEntity.ok(contactAtualizado)
     }
 

@@ -17,12 +17,13 @@ data class Contact(
     var name: String,
 
     @field:NotEmpty
-    @field:Email(message ="Field email is not valid")
+    @field:Email(message = "Field email is not valid")
     @field:Column(unique = true)
     var email: String,
 
-    var data: LocalDateTime = LocalDateTime.now(),
-
     @OneToMany(cascade = arrayOf(CascadeType.ALL))
-    var phone: List<Phone>
+    var phone: List<Phone>,
+
+    var data: LocalDateTime = LocalDateTime.now()
 )
+

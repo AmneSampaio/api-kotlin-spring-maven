@@ -13,13 +13,13 @@ data class ContactForm(
 
     @field:NotEmpty
     @field:Size(min = 5, max = 50, message = "Field name is not valid")
-    var name: String,
+    val name: String,
 
     @field:NotEmpty
     @field:Email(message = "Field email is not valid")
     @field:Column(unique = true)
-    var email: String,
+    val email: String,
 
     @OneToMany(cascade = [CascadeType.ALL])
-    var phone: List<Phone>
+    val phone: List<Phone>
 )

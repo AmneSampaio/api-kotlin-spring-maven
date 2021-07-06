@@ -1,44 +1,43 @@
 package com.api.sk.service
 
-import com.api.sk.dto.ContactForm
+import com.api.sk.dto.ContactDTO
 import com.api.sk.entities.Contact
 import com.api.sk.repositories.ContactRepository
-import com.api.sk.utils.mapper.ConversorDeClassesMapper
+import com.api.sk.utils.mapper.MapperDTOEntityContact
+import org.springframework.http.HttpStatus
+import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Service
-import javax.persistence.EntityNotFoundException
 
 @Service
-class ContactService(
-    private val contactRepository: ContactRepository,
-    private val conversorDeClassesMapper: ConversorDeClassesMapper
-) {
+class ContactService(private val contactRepository: ContactRepository,
+                     private val mapperDTOEntityContact: MapperDTOEntityContact) {
 
-    fun listarTodos(): List<Contact> {
-        return contactRepository.findAll()
+    fun listarTodos(): List<Contact> = contactRepository.findAll()
 
-    }
+    fun listaPorId(id: Long): ResponseEntity<Contact> =
+        contactRepository.findById(id).map {
+                ResponseEntity.ok(it)
+            }
+            .orElse(ResponseEntity.notFound().build())
 
-    fun listaPorId(id: Long): Contact {
-        return contactRepository.findById(id).orElseThrow { EntityNotFoundException() }
-    }
+    fun criaContato(contactDTO: ContactDTO): Contact =
+       contactRepository.save(mapperDTOEntityContact.doDTOToEntity(contactDTO))
 
-    fun criaContato(contactForm: ContactForm): Contact {
-        val salvaContact = conversorDeClassesMapper.doDTOToEntity(contactForm)
-        return contactRepository.save(salvaContact)
-    }
+    fun atualiza(id: Long, contactDTO: ContactDTO): ResponseEntity<Contact> =
+        contactRepository.findById(id).map {
+            val contactAtualizado = it.copy(
+                name = contactDTO.name,
+                email = contactDTO.email,
+                phone = contactDTO.phone
+            )
+            ResponseEntity.ok(contactRepository.save(contactAtualizado))
+        }.orElse(ResponseEntity.notFound().build())
 
-    fun atualiza(id: Long, contactForm: ContactForm): Contact {
-        val contactNoBanco = contactRepository.findById(id).orElseThrow { EntityNotFoundException() }
-        val contactAtualizado = contactNoBanco.apply {
-            this.name = contactNoBanco.name
-            this.email = contactNoBanco.email
-            this.phone = contactNoBanco.phone
-        }
-        return contactRepository.save(contactAtualizado)
-    }
 
-    fun deleta(id: Long) {
-        val contactNoBanco = contactRepository.findById(id).orElseThrow { EntityNotFoundException() }
-        return contactRepository.delete(contactNoBanco)
-    }
+    fun deleta(id: Long): ResponseEntity<Void> = contactRepository
+        .findById(id).map {
+            contactRepository.delete(it)
+            ResponseEntity<Void>(HttpStatus.OK)}
+        .orElse(ResponseEntity.notFound().build())
+
 }

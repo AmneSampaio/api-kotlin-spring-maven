@@ -1,6 +1,6 @@
 package com.api.sk.controlers
 
-import com.api.sk.dto.ContactDTO
+import com.api.sk.dto.ContactForm
 import com.api.sk.entities.Contact
 import com.api.sk.service.ContactService
 import org.springframework.http.HttpStatus
@@ -22,15 +22,15 @@ class ContactController(private val contactService: ContactService) {
 
     @PostMapping
     fun criaContato(
-        @Valid @RequestBody contactDTO: ContactDTO): ResponseEntity<Contact> {
-        val contactSalvo = contactService.criaContato(contactDTO)
+        @Valid @RequestBody contactForm: ContactForm): ResponseEntity<Contact> {
+        val contactSalvo = contactService.criaContato(contactForm)
         return ResponseEntity.ok().body(contactSalvo)
     }
 
     @PutMapping("/{id}")
-    fun atualiza(@Valid @PathVariable("id") id: Long, @RequestBody contactDTO: ContactDTO):
+    fun atualiza(@Valid @PathVariable("id") id: Long, @RequestBody contactForm: ContactForm):
             ResponseEntity<Optional<Contact>> =
-        ResponseEntity.ok(contactService.atualiza(id, contactDTO))
+        ResponseEntity.ok(contactService.atualiza(id, contactForm))
 
 
     @DeleteMapping("/{id}")

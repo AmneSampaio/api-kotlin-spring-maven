@@ -1,10 +1,10 @@
 package com.api.sk.utils.mapper
 
-import com.api.sk.dto.ContactDTO
+import com.api.sk.dto.ContactForm
 
 
 interface Mapper<DTO, Entity> {
 
     fun doEntityToDTO(entity: Entity): DTO
-    fun doDTOToEntity(dto: ContactDTO): Entity
+    fun doDTOToEntity(dto: ContactForm): Entity
 }

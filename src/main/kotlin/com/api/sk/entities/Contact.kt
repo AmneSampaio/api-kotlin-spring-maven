@@ -1,6 +1,6 @@
 package com.api.sk.entities
 
-import com.api.sk.dto.ContactDTO
+import com.api.sk.dto.ContactForm
 import java.time.LocalDateTime
 import javax.persistence.*
 import javax.validation.constraints.Email
@@ -27,10 +27,9 @@ data class Contact(
                orphanRemoval = true)
     @JoinColumn(name = "contact_id")
     var phone: List<Phone> = emptyList<Phone>(),
-
     var data: LocalDateTime = LocalDateTime.now()
 ) {
-    constructor(contactDTO: ContactDTO) : this(0, "", "", emptyList<Phone>()) {
+    constructor(contactDTO: ContactForm) : this(0, "", "", emptyList<Phone>()) {
         this.name = contactDTO.name
         this.email = contactDTO.email
         this.phone = contactDTO.phone

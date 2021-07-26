@@ -1,7 +1,10 @@
 package com.api.sk.service
 
-import com.api.sk.dto.ContactDTO
+import com.api.sk.dto.ContactAdicionaPhoneForm
+import com.api.sk.dto.ContactForm
+import com.api.sk.dto.ContactView
 import com.api.sk.entities.Contact
+import com.api.sk.entities.Phone
 import com.api.sk.repositories.ContactRepository
 import com.api.sk.utils.mapper.MapperDTOEntityContact
 import org.springframework.stereotype.Service
@@ -15,15 +18,23 @@ class ContactService(private val contactRepository: ContactRepository,
 
     fun listaPorId(id: Long) = contactRepository.findById(id).map { it }
 
-    fun criaContato(contactDTO: ContactDTO): Contact =
-      contactRepository.save(mapperDTOEntityContact.doDTOToEntity(contactDTO))
+    fun criaContato(contactForm: ContactForm) =
+        contactRepository.save(mapperDTOEntityContact.doDTOToEntity(contactForm))
 
-    fun atualiza(id: Long, contactDTO: ContactDTO): Optional<Contact> =
+    fun adicionaPhones(id: Long, phone: List<Phone>) =
+        contactRepository.findById(id).map {
+            val contactNovoPhone = it.copy(
+                phone = phone)
+            // val phoneNovo: List<Phone> = listOf(phone)
+            contactRepository.save(contactNovoPhone)
+        }
+
+    fun atualiza(id: Long, contactForm: ContactForm): Optional<Contact> =
         contactRepository.findById(id).map {
             val contactAtualizado = it.copy(
-                name = contactDTO.name,
-                email = contactDTO.email,
-                phone = contactDTO.phone
+                name = contactForm.name,
+                email = contactForm.email,
+                phone = contactForm.phone
             )
             contactRepository.save(contactAtualizado)
         }

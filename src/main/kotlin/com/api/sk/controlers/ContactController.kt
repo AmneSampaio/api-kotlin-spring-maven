@@ -3,6 +3,7 @@ package com.api.sk.controlers
 import com.api.sk.dto.ContactDTO
 import com.api.sk.entities.Contact
 import com.api.sk.service.ContactService
+import com.api.sk.utils.mapper.MapperDTOEntityContact
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
@@ -11,7 +12,9 @@ import javax.validation.Valid
 
 @RestController
 @RequestMapping("/contacts")
-class ContactController(private val contactService: ContactService) {
+class ContactController(private val contactService: ContactService,
+                        private val mapperDTOEntityContact: MapperDTOEntityContact
+) {
 
     @GetMapping
     fun listaTodos(): List<Contact> = contactService.listarTodos()
@@ -28,12 +31,11 @@ class ContactController(private val contactService: ContactService) {
     }
 
     @PutMapping("/{id}")
-    fun atualiza(@Valid @PathVariable("id") id: Long, @RequestBody contactDTO: ContactDTO):
-            ResponseEntity<Optional<Contact>> =
+    fun atualiza(@Valid @PathVariable("id") id: Long, @RequestBody contactDTO: ContactDTO)=
         ResponseEntity.ok(contactService.atualiza(id, contactDTO))
 
 
     @DeleteMapping("/{id}")
-    fun deleta(@Valid @PathVariable("id") id: Long): ResponseEntity<Optional<Unit>> =
+    fun deleta(@Valid @PathVariable("id") id: Long)=
         ResponseEntity(contactService.deleta(id), HttpStatus.OK)
 }

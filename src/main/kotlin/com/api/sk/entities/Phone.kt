@@ -6,7 +6,7 @@ import javax.validation.constraints.NotEmpty
 import javax.validation.constraints.Size
 
 @Entity
-class Phone(
+data class Phone(
     @field:Id
     @field:GeneratedValue(strategy = GenerationType.IDENTITY)
     @field:JsonIgnore

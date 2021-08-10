@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component
 class MapperDTOEntityContact : Mapper<ContactDTO, Contact> {
 
     override fun doEntityToDTO(entity: Contact): ContactDTO = ContactDTO(
+        entity.id,
         entity.name,
         entity.email,
         entity.phone
@@ -15,6 +16,7 @@ class MapperDTOEntityContact : Mapper<ContactDTO, Contact> {
 
 
     override fun doDTOToEntity(dto: ContactDTO): Contact = Contact(
+        dto.id,
         dto.name,
         dto.email,
         dto.phone
